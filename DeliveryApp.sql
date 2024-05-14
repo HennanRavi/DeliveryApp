@@ -7,7 +7,7 @@
 CREATE TABLE User(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(200) NOT NULL,
     EMAIL VARCHAR(60)NOT NULL,
     PASSWORD VARCHAR(23)NOT NULL,
@@ -18,25 +18,25 @@ CREATE TABLE User(
 CREATE TABLE Category_Establishment(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(50) NOT NULL,
-    DESCRIPTION VARCHAR(200) NOT NULL
+    DESCRIPTION VARCHAR(200)
 )
 
 CREATE TABLE Category_Product(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(100) NOT NULL,
-    DESCRIPTION VARCHAR(200) NOT NULL
+    DESCRIPTION VARCHAR(200)
 )
 
 CREATE TABLE Restaurant(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(100) NOT NULL,
-    DESCRIPTION VARCHAR(200)
+    DESCRIPTION VARCHAR(200),
     PHONE_NUMBER INT NOT NULL,
     CNPJ VARCHAR(14) NOT NULL,
     RATE INT
@@ -45,17 +45,17 @@ CREATE TABLE Restaurant(
 CREATE TABLE Operation_Restaurant(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     DAY INT,
-    OPEN TIME INT,
-    CLOSING TIME INT
+    OPEN TIME DECIMAL,
+    CLOSING TIME DECIMAL
 )
 
 CREATE TABLE Address(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
-    ROAD VARCHAR(200) NOT NULL,
+    DATA_CREATE DATE TIME,
+    STREET VARCHAR(200) NOT NULL,
     NEIGHBORHOOD VARCHAR(50) NOT NULL,
     CITY VARCHAR(80) NOT NULL,
     ZIP_CODE VARCHAR(8),
@@ -67,7 +67,7 @@ CREATE TABLE Address(
 CREATE TABLE Product(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(60) NOT NULL,
     PRICE DECIMAL NOT NULL,
     DESCRIPTION VARCHAR(200)
@@ -76,7 +76,7 @@ CREATE TABLE Product(
 CREATE TABLE Additional(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(60) NOT NULL,
     VALUE INT,
     DESCRIPTION VARCHAR(200)
@@ -91,7 +91,7 @@ CREATE TABLE Favorite(
 CREATE TABLE Stats_Delivery(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(80),
     DESCRIPTION(200)
 )
@@ -99,7 +99,7 @@ CREATE TABLE Stats_Delivery(
 CREATE TABLE Coupon(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     CODE VARCHAR(10) NOT NULL,
     VALUE INT NOT NULL,
     VALIDITY INT NOT NULL,
@@ -109,30 +109,30 @@ CREATE TABLE Coupon(
 CREATE TABLE Delivery(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     DELIVERY_FEE INT,
     AMOUNT INT,
-    IS_REMOVAL DECIMAL,
-    DESCRIPTION VARCHAR(200),
+    IS_REMOVAL BOOLEAN,
+    DESCRIPTION VARCHAR(200)
 )
 
 CREATE TABLE Delivery_Product(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME
 )
 
 CREATE TABLE Additional_Product_Delivery(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
-    AMOUNT INT,
+    DATA_CREATE DATE TIME,
+    AMOUNT INT
 )
 
 CREATE TABLE Rate(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     RESTAURANT_RATE INT,
     DELIVERY_RATE INT,
     DESCRIPTION VARCHAR(200)
@@ -141,31 +141,31 @@ CREATE TABLE Rate(
 CREATE TABLE Historic_Delivery(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME
 )
 
 CREATE TABLE Stats_Pay(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(150),
-    DESCRIPTION VARCHAR(200),
+    DESCRIPTION VARCHAR(200)
 )
 
 CREATE TABLE Method_Pay(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
+    DATA_CREATE DATE TIME,
     NAME VARCHAR(150),
-    DESCRIPTION VARCHAR(200),
+    DESCRIPTION VARCHAR(200)
 )
 
 CREATE TABLE Payment(
     ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     STATS INT,
-    DATA_CREATE DATE,
-    VALUE INT NOT NULL,
-    DATE_HOUR INT,
+    DATA_CREATE DATE TIME,
+    VALUE DECIMAL NOT NULL,
+    DATE_HOUR INT
 )
 
 
@@ -257,93 +257,51 @@ ADD CONSTRAINT FK_ID_STATS_PAY FOREIGN KEY (STAT_PAY) REFERENCES Stats_Pay (ID);
 
 /* USER */
 INSERT INTO User (STATS, DATA_CREATE, NAME, EMAIL, PASSWORD, PHONE_NUMBER, CPF) 
-VALUES (1, NOW(), 'John Doe', 'john@example.com', 'hashed_password', 1234567890, '12345678901');
-
-INSERT INTO User (STATS, DATA_CREATE, NAME, EMAIL, PASSWORD, PHONE_NUMBER, CPF) 
-VALUES (1, NOW(), 'Alice Smith', 'alice@example.com', 'hashed_password', 9876543210, '09876543210');
-
-INSERT INTO User (STATS, DATA_CREATE, NAME, EMAIL, PASSWORD, PHONE_NUMBER, CPF) 
-VALUES (1, NOW(), 'Bob Johnson', 'bob@example.com', 'hashed_password', 5555555555, '55555555555');
-
-INSERT INTO User (STATS, DATA_CREATE, NAME, EMAIL, PASSWORD, PHONE_NUMBER, CPF) 
+VALUES (1, NOW(), 'John Doe', 'john@example.com', 'hashed_password', 1234567890, '12345678901'),
+VALUES (1, NOW(), 'Alice Smith', 'alice@example.com', 'hashed_password', 9876543210, '09876543210'),
+VALUES (1, NOW(), 'Bob Johnson', 'bob@example.com', 'hashed_password', 5555555555, '55555555555'), 
 VALUES (1, NOW(), 'Emily Brown', 'emily@example.com', 'hashed_password', 4444444444, '44444444444');
 
 /* CATEGORY ESTABLISHMENT */
 INSERT INTO Category_Establishment (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Fast Food', 'Quick service restaurant');
-
-INSERT INTO Category_Establishment (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Coffee Shop', 'Cafe serving hot and cold beverages');
-
-INSERT INTO Category_Establishment (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Italian Restaurant', 'Restaurant serving Italian cuisine');
-
-INSERT INTO Category_Establishment (STATS, DATA_CREATE, NAME, DESCRIPTION) 
+VALUES (1, NOW(), 'Fast Food', 'Quick service restaurant'),
+VALUES (1, NOW(), 'Coffee Shop', 'Cafe serving hot and cold beverages'), 
+VALUES (1, NOW(), 'Italian Restaurant', 'Restaurant serving Italian cuisine'),
 VALUES (1, NOW(), 'Mexican Restaurant', 'Restaurant serving Mexican cuisine');
 
 /* RESTAURANT */
 INSERT INTO Restaurant (STATS, DATA_CREATE, NAME, DESCRIPTION, PHONE_NUMBER, CNPJ, RATE, CATEG_ESTAB_FK) 
-VALUES (1, NOW(), 'Fast Food Place', 'Our fast food restaurant offers quick service meals.', 1234567890, '12345678901234', 4, 1);
-
-INSERT INTO Restaurant (STATS, DATA_CREATE, NAME, DESCRIPTION, PHONE_NUMBER, CNPJ, RATE, CATEG_ESTAB_FK) 
-VALUES (1, NOW(), 'Caffeine Haven', 'A cozy coffee shop serving a variety of hot and cold beverages.', 9876543210, '98765432109876', 5, 2);
-
-INSERT INTO Restaurant (STATS, DATA_CREATE, NAME, DESCRIPTION, PHONE_NUMBER, CNPJ, RATE, CATEG_ESTAB_FK) 
-VALUES (1, NOW(), 'Taste of Italy', 'Authentic Italian cuisine in a warm and inviting atmosphere.', 5555555555, '55555555555555', 4, 3);
-
-INSERT INTO Restaurant (STATS, DATA_CREATE, NAME, DESCRIPTION, PHONE_NUMBER, CNPJ, RATE, CATEG_ESTAB_FK) 
+VALUES (1, NOW(), 'Fast Food Place', 'Our fast food restaurant offers quick service meals.', 1234567890, '12345678901234', 4, 1),
+VALUES (1, NOW(), 'Caffeine Haven', 'A cozy coffee shop serving a variety of hot and cold beverages.', 9876543210, '98765432109876', 5, 2),
+VALUES (1, NOW(), 'Taste of Italy', 'Authentic Italian cuisine in a warm and inviting atmosphere.', 5555555555, '55555555555555', 4, 3),
 VALUES (1, NOW(), 'Spice Fiesta', 'Experience the flavors of Mexico with our delicious dishes.', 4444444444, '44444444444444', 4, 4);
 
 /* OPERATION RESTAURANT */
 INSERT INTO Operation_Restaurant (STATS, DATA_CREATE, DAY, OPEN_TIME, CLOSING_TIME) 
-VALUES (1, NOW(), 1, '08:00:00', '18:00:00');
-
-INSERT INTO Operation_Restaurant (STATS, DATA_CREATE, DAY, OPEN_TIME, CLOSING_TIME) 
-VALUES (1, NOW(), 2, '08:00:00', '18:00:00');
-
-INSERT INTO Operation_Restaurant (STATS, DATA_CREATE, DAY, OPEN_TIME, CLOSING_TIME) 
-VALUES (1, NOW(), 3, '08:00:00', '18:00:00');
-
-INSERT INTO Operation_Restaurant (STATS, DATA_CREATE, DAY, OPEN_TIME, CLOSING_TIME) 
+VALUES (1, NOW(), 1, '08:00:00', '18:00:00'),
+VALUES (1, NOW(), 2, '08:00:00', '18:00:00'),
+VALUES (1, NOW(), 3, '08:00:00', '18:00:00'),
 VALUES (1, NOW(), 4, '08:00:00', '18:00:00');
 
 /* ADDRESS */
 INSERT INTO Address (STATS, DATA_CREATE, ROAD, NEIGHBORHOOD, CITY, ZIP_CODE, NUMBER, COMPLEMENT, PATTERN) 
-VALUES (1, NOW(), '123 Main Street', 'Downtown', 'New York', '10001', 10, 'Apt 1', 1);
-
-INSERT INTO Address (STATS, DATA_CREATE, ROAD, NEIGHBORHOOD, CITY, ZIP_CODE, NUMBER, COMPLEMENT, PATTERN) 
-VALUES (1, NOW(), '456 Elm Street', 'Midtown', 'New York', '10002', 20, NULL, 2);
-
-INSERT INTO Address (STATS, DATA_CREATE, ROAD, NEIGHBORHOOD, CITY, ZIP_CODE, NUMBER, COMPLEMENT, PATTERN) 
-VALUES (1, NOW(), '789 Oak Avenue', 'Uptown', 'New York', '10003', 30, 'Suite 100', 1);
-
-INSERT INTO Address (STATS, DATA_CREATE, ROAD, NEIGHBORHOOD, CITY, ZIP_CODE, NUMBER, COMPLEMENT, PATTERN) 
+VALUES (1, NOW(), '123 Main Street', 'Downtown', 'New York', '10001', 10, 'Apt 1', 1),
+VALUES (1, NOW(), '456 Elm Street', 'Midtown', 'New York', '10002', 20, NULL, 2),
+VALUES (1, NOW(), '789 Oak Avenue', 'Uptown', 'New York', '10003', 30, 'Suite 100', 1),
 VALUES (1, NOW(), '101 Maple Drive', 'Suburb', 'New York', '10004', 40, NULL, 2);
 
 /* PRODUCT */
 INSERT INTO Product (STATS, DATA_CREATE, NAME, PRICE, DESCRIPTION) 
-VALUES (1, NOW(), 'Cheeseburger', 5.99, 'Juicy beef patty with melted cheese on a sesame seed bun');
-
-INSERT INTO Product (STATS, DATA_CREATE, NAME, PRICE, DESCRIPTION) 
-VALUES (1, NOW(), 'Coffee', 2.99, 'Freshly brewed coffee');
-
-INSERT INTO Product (STATS, DATA_CREATE, NAME, PRICE, DESCRIPTION) 
-VALUES (1, NOW(), 'Margherita Pizza', 8.99, 'Classic pizza topped with tomato, mozzarella, and basil');
-
-INSERT INTO Product (STATS, DATA_CREATE, NAME, PRICE, DESCRIPTION) 
+VALUES (1, NOW(), 'Cheeseburger', 5.99, 'Juicy beef patty with melted cheese on a sesame seed bun'),
+VALUES (1, NOW(), 'Coffee', 2.99, 'Freshly brewed coffee'),
+VALUES (1, NOW(), 'Margherita Pizza', 8.99, 'Classic pizza topped with tomato, mozzarella, and basil'),
 VALUES (1, NOW(), 'Taco', 4.99, 'Traditional Mexican taco with your choice of filling');
 
 /* ADDITIONAL */
 INSERT INTO Additional (STATS, DATA_CREATE, NAME, VALUE, DESCRIPTION) 
-VALUES (1, NOW(), 'Extra Cheese', 100, 'Add extra cheese to your dish');
-
-INSERT INTO Additional (STATS, DATA_CREATE, NAME, VALUE, DESCRIPTION) 
-VALUES (1, NOW(), 'Guacamole', 150, 'Add fresh guacamole to your meal');
-
-INSERT INTO Additional (STATS, DATA_CREATE, NAME, VALUE, DESCRIPTION) 
-VALUES (1, NOW(), 'Bacon', 200, 'Add crispy bacon to your sandwich');
-
-INSERT INTO Additional (STATS, DATA_CREATE, NAME, VALUE, DESCRIPTION) 
+VALUES (1, NOW(), 'Extra Cheese', 100, 'Add extra cheese to your dish'),
+VALUES (1, NOW(), 'Guacamole', 150, 'Add fresh guacamole to your meal'),
+VALUES (1, NOW(), 'Bacon', 200, 'Add crispy bacon to your sandwich'),
 VALUES (1, NOW(), 'Sour Cream', 50, 'Add creamy sour cream to your dish');
 
 /* PRODUCT ADDITIONAL */
@@ -354,117 +312,63 @@ VALUES (1, NOW(), 'Sour Cream', 50, 'Add creamy sour cream to your dish');
 
 /* COUPON */
 INSERT INTO Coupon (STATS, DATA_CREATE, CODE, VALUE, VALIDITY, DESCRIPTION) 
-VALUES (1, NOW(), 'SAVE10', 10, 30, 'Save 10% on your next purchase');
-
-INSERT INTO Coupon (STATS, DATA_CREATE, CODE, VALUE, VALIDITY, DESCRIPTION) 
-VALUES (1, NOW(), 'FREESHIP', 0, 15, 'Free shipping on orders over $50');
-
-INSERT INTO Coupon (STATS, DATA_CREATE, CODE, VALUE, VALIDITY, DESCRIPTION) 
-VALUES (1, NOW(), 'SPRINGSALE', 15, 10, 'Spring sale: Get 15% off your order');
-
-INSERT INTO Coupon (STATS, DATA_CREATE, CODE, VALUE, VALIDITY, DESCRIPTION) 
+VALUES (1, NOW(), 'SAVE10', 10, 30, 'Save 10% on your next purchase'),
+VALUES (1, NOW(), 'FREESHIP', 0, 15, 'Free shipping on orders over $50'),
+VALUES (1, NOW(), 'SPRINGSALE', 15, 10, 'Spring sale: Get 15% off your order'),
 VALUES (1, NOW(), 'HOLIDAY20', 20, 20, 'Holiday special: Save 20% on selected items');
 
 /* DELIVERY */
 INSERT INTO Delivery (STATS, DATA_CREATE, DELIVERY_FEE, AMOUNT, IS_REMOVAL, DESCRIPTION, ID_ADRES, ID_USR, ID_RESTAURAT, ID_CUPON, ID_STAT) 
-VALUES (1, NOW(), 500, 1500, 0, 'Delivery of food order', 1, 1, 1, 1, 1);
-
-INSERT INTO Delivery (STATS, DATA_CREATE, DELIVERY_FEE, AMOUNT, IS_REMOVAL, DESCRIPTION, ID_ADRES, ID_USR, ID_RESTAURAT, ID_CUPON, ID_STAT) 
-VALUES (1, NOW(), 300, 1000, 1, 'Removal of old furniture', 2, 2, NULL, NULL, 2);
-
-INSERT INTO Delivery (STATS, DATA_CREATE, DELIVERY_FEE, AMOUNT, IS_REMOVAL, DESCRIPTION, ID_ADRES, ID_USR, ID_RESTAURAT, ID_CUPON, ID_STAT) 
-VALUES (1, NOW(), 700, 2000, 0, 'Delivery of groceries', 3, 3, NULL, NULL, 1);
-
-INSERT INTO Delivery (STATS, DATA_CREATE, DELIVERY_FEE, AMOUNT, IS_REMOVAL, DESCRIPTION, ID_ADRES, ID_USR, ID_RESTAURAT, ID_CUPON, ID_STAT) 
+VALUES (1, NOW(), 500, 1500, 0, 'Delivery of food order', 1, 1, 1, 1, 1),
+VALUES (1, NOW(), 300, 1000, 1, 'Removal of old furniture', 2, 2, NULL, NULL, 2),
+VALUES (1, NOW(), 700, 2000, 0, 'Delivery of groceries', 3, 3, NULL, NULL, 1),
 VALUES (1, NOW(), 200, 500, 1, 'Removal of electronics', 4, 4, NULL, NULL, 2);
 
 /* DELIVERY PRODUCT */
 INSERT INTO Delivery_Product (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Delivery_Product (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Delivery_Product (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Delivery_Product (STATS, DATA_CREATE) 
+VALUES (1, NOW()),
+VALUES (1, NOW()),
+VALUES (1, NOW()),
 VALUES (1, NOW());
 
 /* ADDITIONAL PRODUCT DELIVERY */
 INSERT INTO Additional_Product_Delivery (STATS, DATA_CREATE, AMOUNT) 
-VALUES (1, NOW(), 1);
-
-INSERT INTO Additional_Product_Delivery (STATS, DATA_CREATE, AMOUNT) 
-VALUES (1, NOW(), 2);
-
-INSERT INTO Additional_Product_Delivery (STATS, DATA_CREATE, AMOUNT) 
-VALUES (1, NOW(), 1);
-
-INSERT INTO Additional_Product_Delivery (STATS, DATA_CREATE, AMOUNT) 
+VALUES (1, NOW(), 1),
+VALUES (1, NOW(), 2),
+VALUES (1, NOW(), 1),
 VALUES (1, NOW(), 3);
 
 /* RATE */
 INSERT INTO Rate (STATS, DATA_CREATE, RESTAURANT_RATE, DELIVERY_RATE, DESCRIPTION) 
-VALUES (1, NOW(), 4, 5, 'Great food and fast delivery!');
-
-INSERT INTO Rate (STATS, DATA_CREATE, RESTAURANT_RATE, DELIVERY_RATE, DESCRIPTION) 
-VALUES (1, NOW(), 3, 4, 'Good food but delivery was a bit slow.');
-
-INSERT INTO Rate (STATS, DATA_CREATE, RESTAURANT_RATE, DELIVERY_RATE, DESCRIPTION) 
-VALUES (1, NOW(), 5, 5, 'Excellent service, both food and delivery!');
-
-INSERT INTO Rate (STATS, DATA_CREATE, RESTAURANT_RATE, DELIVERY_RATE, DESCRIPTION) 
+VALUES (1, NOW(), 4, 5, 'Great food and fast delivery!'),
+VALUES (1, NOW(), 3, 4, 'Good food but delivery was a bit slow.'),
+VALUES (1, NOW(), 5, 5, 'Excellent service, both food and delivery!'),
 VALUES (1, NOW(), 4, 3, 'Food was good but delivery took too long.');
 
 /* HISTORIC DELIVERY */
 INSERT INTO Historic_Delivery (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Historic_Delivery (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Historic_Delivery (STATS, DATA_CREATE) 
-VALUES (1, NOW());
-
-INSERT INTO Historic_Delivery (STATS, DATA_CREATE) 
+VALUES (1, NOW()),
+VALUES (1, NOW()),
+VALUES (1, NOW()),
 VALUES (1, NOW());
 
 /* STATS PAY */
 INSERT INTO Stats_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Successful', 'Payment was successfully processed.');
-
-INSERT INTO Stats_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Pending', 'Payment is pending processing.');
-
-INSERT INTO Stats_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Failed', 'Payment failed to process.');
-
-INSERT INTO Stats_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
+VALUES (1, NOW(), 'Successful', 'Payment was successfully processed.'),
+VALUES (1, NOW(), 'Pending', 'Payment is pending processing.'),
+VALUES (1, NOW(), 'Failed', 'Payment failed to process.'),
 VALUES (1, NOW(), 'Refunded', 'Payment was refunded.');
 
 /* METHOD PAY */
 INSERT INTO Method_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Credit Card', 'Payment made using a credit card.');
-
-INSERT INTO Method_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Debit Card', 'Payment made using a debit card.');
-
-INSERT INTO Method_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
-VALUES (1, NOW(), 'Bank Transfer', 'Payment made via bank transfer.');
-
-INSERT INTO Method_Pay (STATS, DATA_CREATE, NAME, DESCRIPTION) 
+VALUES (1, NOW(), 'Credit Card', 'Payment made using a credit card.'),
+VALUES (1, NOW(), 'Debit Card', 'Payment made using a debit card.'),
+VALUES (1, NOW(), 'Bank Transfer', 'Payment made via bank transfer.'),
 VALUES (1, NOW(), 'PayPal', 'Payment made using PayPal.');
 
 /* PAYMENT */
 INSERT INTO Payment (STATS, DATA_CREATE, VALUE, DATE_HOUR) 
-VALUES (1, NOW(), 500, UNIX_TIMESTAMP(NOW()));
-
-INSERT INTO Payment (STATS, DATA_CREATE, VALUE, DATE_HOUR) 
-VALUES (1, NOW(), 300, UNIX_TIMESTAMP(NOW()));
-
-INSERT INTO Payment (STATS, DATA_CREATE, VALUE, DATE_HOUR) 
-VALUES (1, NOW(), 700, UNIX_TIMESTAMP(NOW()));
-
-INSERT INTO Payment (STATS, DATA_CREATE, VALUE, DATE_HOUR) 
+VALUES (1, NOW(), 500, UNIX_TIMESTAMP(NOW())),
+VALUES (1, NOW(), 300, UNIX_TIMESTAMP(NOW())),
+VALUES (1, NOW(), 700, UNIX_TIMESTAMP(NOW())),
 VALUES (1, NOW(), 200, UNIX_TIMESTAMP(NOW()));
